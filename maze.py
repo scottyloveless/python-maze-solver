@@ -1,5 +1,4 @@
 from cell import Cell
-from window import Window
 import time
 
 class Maze:
@@ -11,7 +10,7 @@ class Maze:
             num_cols,
             cell_size_x,
             cell_size_y,
-        win: Window,
+        win=None,
     ):
         self.x1 = x1
         self.y1 = y1
@@ -21,6 +20,7 @@ class Maze:
         self.cell_size_y = cell_size_y
         self.win = win
         self._cells = []
+        self._create_cells()
 
     def _create_cells(self):
         x1 = self.x1
@@ -47,9 +47,11 @@ class Maze:
         x_pos = self.x1 + (j * self.cell_size_x)
         y_pos = self.y1 + (i * self.cell_size_y)
         self._cells[j][i].draw(x_pos, y_pos, x_pos + self.cell_size_x, y_pos + self.cell_size_y)
-
-        self._animate()
+        
+        if self.win is not None:
+            self._animate()
 
     def _animate(self):
-        self.win.redraw()
-        time.sleep(0.05)
+        if self.win is not None:
+            self.win.redraw()
+            time.sleep(0.05)
